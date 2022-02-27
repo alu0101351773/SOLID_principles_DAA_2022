@@ -18,16 +18,13 @@
 
 class IntMatrix {
 public:
-    IntMatrix(const int& i_size, const int& j_size);
+    IntMatrix(const int& i_size = 1, const int& j_size = 1);
     ~IntMatrix();
 
     void Resize(const int& new_i_size = 1, const int& new_j_size = 1);
 
-    const int rows_size(void);
-    const int cols_size(void);
-
-    std::vector<int> get_row(const int& selected_row);
-    std::vector<int> get_col(const int& selected_col);
+    const int get_rows(void);
+    const int get_cols(void);
 
     int& at(const int& i, const int& j);
 
@@ -60,27 +57,11 @@ IntMatrix::Resize(const int& new_i_size, const int& new_j_size) {
 
 
 const int
-IntMatrix::rows_size(void) { return rows_size_; }
+IntMatrix::get_rows(void) { return rows_size_; }
 
 
 const int
-IntMatrix::cols_size(void) { return cols_size_; }
-
-
-std::vector<int>
-IntMatrix::get_row(const int& selected_row) {
-    return inner_vector_[selected_row];
-}
-
-
-std::vector<int>
-IntMatrix::get_col(const int& selected_col) {
-    std::vector<int> temporal_vector;
-    for (int i = rows_size_; i > 0; --i) {
-        temporal_vector.push_back(inner_vector_[i][selected_col]);
-    }
-    return temporal_vector;
-}
+IntMatrix::get_cols(void) { return cols_size_; }
 
 
 int&
