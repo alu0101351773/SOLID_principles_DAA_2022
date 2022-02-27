@@ -2,10 +2,10 @@
 #define TMATRIX
 
 /**
- * @file daa_1.cc
+ * @file IntMatrix.cc
  * @author Jorge Cabrera (alu0101351773@ull.edu.es)
- * @brief program to compare the performance of two algorithms
- * @version 0.2
+ * @brief program to abstract an integer matrix
+ * @version 1.1
  * @date 2022-02-27
  * 
  * @copyright Copyright (c) 2022
@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <iostream>
+#include <stdlib.h>
 
 
 class IntMatrix {
@@ -67,6 +68,25 @@ IntMatrix::get_cols(void) { return cols_size_; }
 int&
 IntMatrix::at(const int& i, const int& j) {
     return inner_vector_[i][j];
+}
+
+
+void GenerateRandomValues(IntMatrix& original_matrix) {
+    for (int i = 0; i < original_matrix.get_rows(); ++i) {
+        for (int j = 0; j < original_matrix.get_cols(); ++j) {
+            original_matrix.at(i, j) = (rand() % 10);
+        }
+    }
+}
+
+
+void PrintMatrix(IntMatrix original_matrix) {
+    for (int i = 0; i < original_matrix.get_rows(); ++i) {
+        for (int j = 0; j < original_matrix.get_cols(); ++j) {
+            std::cout << original_matrix.at(i, j) << " ";
+        }
+        std::cout << "\n";
+    }
 }
 
 #endif
