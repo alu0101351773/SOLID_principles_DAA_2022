@@ -3,6 +3,7 @@
 #include <iostream>
 #include "IntMatrix.h"
 #include "chrono"
+#include <stdlib.h>
 
 
 // The 'Strategy' abstract class
@@ -84,12 +85,14 @@ void PrintMatrix(IntMatrix original_matrix) {
     }
 }
 
-int main(void) {
+int main(int argc, char* argv[]) {
     std::chrono::time_point<std::chrono::system_clock> start, end;
     std::chrono::duration<double> elapsed_seconds;
     srand(2022);
 
-    IntMatrix prueba1(20, 40), prueba2(40, 70);
+    int a = atoi(argv[1]), b = atoi(argv[2]), c = atoi(argv[3]);
+
+    IntMatrix prueba1(a, b), prueba2(b, c);
     GenerateRandomValues(prueba1);
     GenerateRandomValues(prueba2);
 
@@ -109,7 +112,6 @@ int main(void) {
     end = std::chrono::system_clock::now();
     elapsed_seconds = end - start;
     std::cout << "Algoritmo por columnas:\t" << elapsed_seconds.count() << " segundos.\n";
-
 
     return 0;
 }
