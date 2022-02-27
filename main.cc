@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "IntMatrix.h"
+#include "chrono"
 
 
 // The 'Strategy' abstract class
@@ -84,23 +85,31 @@ void PrintMatrix(IntMatrix original_matrix) {
 }
 
 int main(void) {
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    std::chrono::duration<double> elapsed_seconds;
     srand(2022);
-    IntMatrix prueba1(2, 3), prueba2(3, 2), resultado(2, 2);
+
+    IntMatrix prueba1(20, 40), prueba2(40, 70);
     GenerateRandomValues(prueba1);
     GenerateRandomValues(prueba2);
-
-    PrintMatrix(prueba1);
-    PrintMatrix(prueba2);
 
     Context *context_a, *context_b;
 
     context_a = new Context(new ConcreteStrategyA());
-    PrintMatrix(context_a->ContextInterface(prueba1, prueba2));	// Salida de la interfaz A
-
-    std::cout << "\n";
-
     context_b = new Context(new ConcreteStrategyB());
-    PrintMatrix(context_b->ContextInterface(prueba1, prueba2));	// Salida de la interfaz A
+
+    start = std::chrono::system_clock::now();
+    context_a->ContextInterface(prueba1, prueba2);
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - start;
+    std::cout << "Algoritmo por filas:\t" << elapsed_seconds.count() << " segundos.\n";
+    
+    start = std::chrono::system_clock::now();
+    context_b->ContextInterface(prueba1, prueba2);
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end - start;
+    std::cout << "Algoritmo por columnas:\t" << elapsed_seconds.count() << " segundos.\n";
+
 
     return 0;
 }
