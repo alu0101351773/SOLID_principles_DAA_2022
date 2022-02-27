@@ -60,8 +60,14 @@ class Context {
             _strategy = strategy;
         }
  
-        IntMatrix ContextInterface(IntMatrix a, IntMatrix b) {
-           return _strategy -> AlgorithmInterface(a, b);
+        void ContextInterface(IntMatrix a, IntMatrix b) {
+            std::chrono::time_point<std::chrono::system_clock> start, end;
+            std::chrono::duration<double> elapsed_seconds;
+            start = std::chrono::system_clock::now();
+            _strategy -> AlgorithmInterface(a, b);
+            end = std::chrono::system_clock::now();
+            elapsed_seconds = end - start;
+            std::cout << "Elapsed time:\t" << elapsed_seconds.count() << " s.\n";
         }
 
 };
@@ -86,8 +92,6 @@ void PrintMatrix(IntMatrix original_matrix) {
 }
 
 int main(int argc, char* argv[]) {
-    std::chrono::time_point<std::chrono::system_clock> start, end;
-    std::chrono::duration<double> elapsed_seconds;
     srand(2022);
 
     int a = atoi(argv[1]), b = atoi(argv[2]), c = atoi(argv[3]);
@@ -101,17 +105,11 @@ int main(int argc, char* argv[]) {
     context_a = new Context(new ConcreteStrategyA());
     context_b = new Context(new ConcreteStrategyB());
 
-    start = std::chrono::system_clock::now();
+    std::cout << "Multiplication by rows:\n";
     context_a->ContextInterface(prueba1, prueba2);
-    end = std::chrono::system_clock::now();
-    elapsed_seconds = end - start;
-    std::cout << "Algoritmo por filas:\t" << elapsed_seconds.count() << " segundos.\n";
-    
-    start = std::chrono::system_clock::now();
+
+    std::cout << "\nMultiplication by columns:\n";
     context_b->ContextInterface(prueba1, prueba2);
-    end = std::chrono::system_clock::now();
-    elapsed_seconds = end - start;
-    std::cout << "Algoritmo por columnas:\t" << elapsed_seconds.count() << " segundos.\n";
 
     return 0;
 }
